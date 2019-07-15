@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <catalog prefer="public" xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog">
     <group id="Folder Repository, directory=, recursive=true, Auto-Update=true, version=2" prefer="public" xml:base="">
-        <uri id="Automatically generated entry, Timestamp=1562776618429" name="http://www.semanticweb.org/opendev/ontologies/2017/10/untitled-ontology-8" uri="gym_semantic.owl"/>
-        <uri id="Automatically generated entry, Timestamp=1562776618429" name="shadowed:http://www.semanticweb.org/opendev/ontologies/2017/10/untitled-ontology-8" uri="src/main/java/ontologie/demo/gym_semantic.owl"/>
+        <uri id="Automatically generated entry, Timestamp=1563040792360" name="http://www.semanticweb.org/construction.owl" uri="construction.owl"/>
     </group>
 </catalog>

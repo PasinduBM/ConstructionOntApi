@@ -21,14 +21,14 @@ public class OntologieApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... strings) throws Exception {
-		String fileName = "gym_semantic.owl";
+		String fileName = "construction.owl";
 		try {
 			File file = new File(fileName);
 			FileReader reader = new FileReader(file);
 			OntModel model = ModelFactory
 					.createOntologyModel(OntModelSpec.OWL_DL_MEM);
 			model.read(reader,null);
-			model.write(System.out,"RDF/XML-ABBREV");
+			// model.write(System.out,"RDF/XML-ABBREV");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

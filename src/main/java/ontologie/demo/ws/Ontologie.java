@@ -3,9 +3,12 @@ package ontologie.demo.ws;
 import org.apache.jena.ontology.*;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.ModelFactory;
+import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.sparql.function.library.print;
 import org.json.simple.JSONObject;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.ws.soap.support.SoapUtils;
 
 import java.io.File;
 import java.io.FileReader;
@@ -19,7 +22,7 @@ public class Ontologie {
     @RequestMapping(value = "/ontologies",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public   List<JSONObject> getontologies() {
         List<JSONObject> list=new ArrayList();
-        String fileName = "gym_semantic.owl";
+        String fileName = "construction.owl";
         try {
             File file = new File(fileName);
             FileReader reader = new FileReader(file);
@@ -46,7 +49,7 @@ public class Ontologie {
     @RequestMapping(value = "/classesList",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public   List<JSONObject> getClasses() {
         List<JSONObject> list=new ArrayList();
-        String fileName = "gym_semantic.owl";
+        String fileName = "construction.owl";
         try {
             File file = new File(fileName);
             FileReader reader = new FileReader(file);
@@ -69,29 +72,113 @@ public class Ontologie {
         return null;
     }
 
-    @RequestMapping(value = "/subClasses",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public   List<JSONObject> getSubClasses(@RequestParam("classname") String className) {
+    @RequestMapping(value = "/searchByLocation",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public   List<JSONObject> searchByLocation(@RequestParam("location") String location) {
         List<JSONObject> list=new ArrayList();
-        String fileName = "gym_semantic.owl";
+        String fileName = "construction.owl";
         try {
+            System.out.println(location);
             File file = new File(fileName);
             FileReader reader = new FileReader(file);
             OntModel model = ModelFactory
                     .createOntologyModel(OntModelSpec.OWL_DL_MEM);
             model.read(reader,null);
-            String classURI = "http://www.semanticweb.org/opendev/ontologies/2017/10/untitled-ontology-8#".concat(className);
-            System.out.println(classURI);
-            OntClass personne = model.getOntClass(classURI );
-            Iterator subIter = personne.listSubClasses();
-            while (subIter.hasNext()) {
-                OntClass sub = (OntClass) subIter.next();
-                    JSONObject obj = new JSONObject();
-                    obj.put("URI",sub.getURI());
-                    list.add(obj);
-
-
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?ide ?object ?subject WHERE { ?subject my:hasLocation ?object. FILTER REGEX (str(?object), \""+location+"\" , \"i\"). ?subject my:identifier ?ide. }";
+            Query query = QueryFactory.create(sprql);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet resultSet = qe.execSelect();
+           int x=0;
+            while (resultSet.hasNext()) {
+                x++;
+                JSONObject obj = new JSONObject();
+                QuerySolution solution = resultSet.nextSolution();
+                
+                obj.put("ide",solution.get("ide").toString());
+                obj.put("subject",solution.get("subject").toString());
+                obj.put("object",solution.get("object").toString());
+                list.add(obj);
             }
+            System.out.println(x);
+            return list;
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/searchAdvance",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public   List<JSONObject> searchByLocationAdv(@RequestParam(defaultValue = "") String location,@RequestParam(defaultValue = "") String cost,@RequestParam(defaultValue = "") String service) {
+        List<JSONObject> list=new ArrayList();
+        String fileName = "construction.owl";
+        
+        try {
+            System.out.println(location);
+            File file = new File(fileName);
+            FileReader reader = new FileReader(file);
+            OntModel model = ModelFactory
+                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
+            model.read(reader,null);
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?ide ?object ?subject WHERE { ?subject my:hasLocation ?object. FILTER REGEX (str(?object), \""+location+"\" , \"i\"). ?subject my:identifier ?ide. }";
+            Query query = QueryFactory.create(sprql);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet resultSet = qe.execSelect();
+           int x=0;
+            while (resultSet.hasNext()) {
+                x++;
+                JSONObject obj = new JSONObject();
+                QuerySolution solution = resultSet.nextSolution();
+                
+                obj.put("ide",solution.get("ide").toString());
+                obj.put("subject",solution.get("subject").toString());
+                obj.put("object",solution.get("object").toString());
+                list.add(obj);
+            }
+            System.out.println(x);
+            return list;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/getProfile",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public   List<JSONObject> getProfile(@RequestParam("name") String name) {
+        List<JSONObject> list=new ArrayList();
+        String fileName = "construction.owl";
+        try {
+            System.out.println(name);
+            File file = new File(fileName);
+            FileReader reader = new FileReader(file);
+            OntModel model = ModelFactory
+                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
+            model.read(reader,null);
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?subject ?object ?email ?address ?type ?city ?registrationNumber ?started ?phone	WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?subject), \""+name+"\").  optional {?subject my:email  ?email.} optional {?subject   my:address ?address.} optional {?subject my:type ?type.} optional {?subject my:city ?city.} optional {?subject my:phone ?phone.} optional {?subject my:registrationNumber ?registrationNumber.} optional {?subject my:started ?started.}}";
+            Query query = QueryFactory.create(sprql);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet resultSet = qe.execSelect();
+           int x=0;
+            while (resultSet.hasNext()) {
+                x++;
+                JSONObject obj = new JSONObject();
+                QuerySolution solution = resultSet.nextSolution();
+                RDFNode[] res = {solution.get("email"),solution.get("address"),solution.get("type"),solution.get("city"),solution.get("registrationNumber"),solution.get("started"),solution.get("phone"),solution.get("subject"),solution.get("object")};
+                String[] lables = {"email","address","type","city","registrationNumber","started","phone","subject","object"};
+                for(int i=0;i<lables.length;i++){
+                    if(res[i]!=null){
+                        obj.put(lables[i],res[i].toString());
+                    }
+                }
+                
+                list.add(obj);
+            }
+            System.out.println(x);
             return list;
 
 
@@ -307,19 +394,15 @@ public class Ontologie {
     @RequestMapping(value = "/query",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public List<JSONObject> query() {
         List<JSONObject> list=new ArrayList();
-        String fileName = "gym_semantic.owl";
+        String fileName = "construction.owl";
         try {
             File file = new File(fileName);
             FileReader reader = new FileReader(file);
             OntModel model = ModelFactory
                     .createOntologyModel(OntModelSpec.OWL_DL_MEM);
             model.read(reader,null);
-
-            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>" +
-                    "PREFIX owl: <http://www.w3.org/2002/07/owl#>" +
-                    "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>" +
-                    "PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>" +
-                    "select * {?x ?y ?z}";
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX con: <http://www.semanticweb.org/construction.owl#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> SELECT DISTINCT ?subject ?object WHERE { ?subject <http://www.semanticweb.org/construction.owl#identifier> ?object} ";
             Query query = QueryFactory.create(sprql);
             QueryExecution qe = QueryExecutionFactory.create(query, model);
             ResultSet resultSet = qe.execSelect();
@@ -328,10 +411,10 @@ public class Ontologie {
                 x++;
                 JSONObject obj = new JSONObject();
                 QuerySolution solution = resultSet.nextSolution();
-                System.out.println(solution.get("x").toString());
-                obj.put("subject",solution.get("x").toString());
-                obj.put("property",solution.get("y").toString());
-                obj.put("object",solution.get("z").toString());
+                System.out.println(solution.get("subject").toString());
+                obj.put("subject",solution.get("subject").toString());
+                // obj.put("property",solution.get("y").toString());
+                obj.put("object",solution.get("object").toString());
                 list.add(obj);
             }
             System.out.println(x);
