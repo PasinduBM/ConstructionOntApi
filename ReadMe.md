@@ -16,3 +16,4 @@ run the command "java -jar -Dapple.awt.UIElement="false" target/demo-0.0.1-SNAPS
 2. host/getProfile?name=M001
 3. host/searchAdvance?location=colombo&cost=100&service=hotel
 4. host/getLocations
+5. host//getCostLevels
