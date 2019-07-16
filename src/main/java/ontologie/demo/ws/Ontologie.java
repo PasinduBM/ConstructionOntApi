@@ -4,6 +4,7 @@ import org.apache.jena.ontology.*;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.ModelFactory;
 import org.apache.jena.rdf.model.RDFNode;
+import org.apache.jena.rdfconnection.SparqlQueryConnection;
 import org.apache.jena.sparql.function.library.print;
 import org.json.simple.JSONObject;
 import org.springframework.http.MediaType;
@@ -110,7 +111,7 @@ public class Ontologie {
     }
 
     @RequestMapping(value = "/searchAdvance",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
-    public   List<JSONObject> searchByLocationAdv(@RequestParam(defaultValue = "") String location,@RequestParam(defaultValue = "") String cost,@RequestParam(defaultValue = "") String service) {
+    public   List<JSONObject> searchByLocationAdv(@RequestParam(defaultValue = "",required = false,name="location") String location,@RequestParam(name="cost",defaultValue  = "",required = false) String cost,@RequestParam(name="service",required = true) String service) {
         List<JSONObject> list=new ArrayList();
         String fileName = "construction.owl";
         
@@ -121,8 +122,18 @@ public class Ontologie {
             OntModel model = ModelFactory
                     .createOntologyModel(OntModelSpec.OWL_DL_MEM);
             model.read(reader,null);
-            
-            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?ide ?object ?subject WHERE { ?subject my:hasLocation ?object. FILTER REGEX (str(?object), \""+location+"\" , \"i\"). ?subject my:identifier ?ide. }";
+            String sprql = "";
+            System.out.print(location+":"+service+":"+cost);
+            if(location.equals("")&&cost.equals("")){
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y. }";
+            }else if(location.equals("")){
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?subject my:hasCost ?V. FILTER REGEX(str(?V),\""+cost+"\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.}";
+            }else if(cost.equals("")){
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\"). ?X my:identifier ?Y. }";
+            }else {
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?subject my:hasCost ?V.	FILTER REGEX(str(?V),\""+cost+"\").	?X my:isSupplierOf ?subject. ?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\"). ?X my:identifier ?Y. }";
+            }
+            System.out.print(sprql);
             Query query = QueryFactory.create(sprql);
             QueryExecution qe = QueryExecutionFactory.create(query, model);
             ResultSet resultSet = qe.execSelect();
@@ -132,9 +143,9 @@ public class Ontologie {
                 JSONObject obj = new JSONObject();
                 QuerySolution solution = resultSet.nextSolution();
                 
-                obj.put("ide",solution.get("ide").toString());
-                obj.put("subject",solution.get("subject").toString());
-                obj.put("object",solution.get("object").toString());
+                obj.put("name",solution.get("Y").toString());
+                obj.put("id",solution.get("X").toString());
+                
                 list.add(obj);
             }
             System.out.println(x);
@@ -188,6 +199,51 @@ public class Ontologie {
         return null;
     }
 
+    
+    @RequestMapping(value = "/isBelongsTo",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public   List<JSONObject> isBelongsTo(@RequestParam("type1") String tpye1,@RequestParam("type2") String type2) {
+        List<JSONObject> list=new ArrayList();
+        String fileName = "construction.owl";
+        try {
+            
+            File file = new File(fileName);
+            FileReader reader = new FileReader(file);
+            OntModel model = ModelFactory
+                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
+            model.read(reader,null);
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?subject ?object ?email ?address ?type ?city ?registrationNumber ?started ?phone	WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?subject), \""+name+"\").  optional {?subject my:email  ?email.} optional {?subject   my:address ?address.} optional {?subject my:type ?type.} optional {?subject my:city ?city.} optional {?subject my:phone ?phone.} optional {?subject my:registrationNumber ?registrationNumber.} optional {?subject my:started ?started.}}";
+            Query query = QueryFactory.create(sprql);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet resultSet = qe.execSelect();
+           int x=0;
+            while (resultSet.hasNext()) {
+                x++;
+                JSONObject obj = new JSONObject();
+                QuerySolution solution = resultSet.nextSolution();
+                RDFNode[] res = {solution.get("email"),solution.get("address"),solution.get("type"),solution.get("city"),solution.get("registrationNumber"),solution.get("started"),solution.get("phone"),solution.get("subject"),solution.get("object")};
+                String[] lables = {"email","address","type","city","registrationNumber","started","phone","subject","object"};
+                for(int i=0;i<lables.length;i++){
+                    if(res[i]!=null){
+                        obj.put(lables[i],res[i].toString());
+                    }
+                }
+                
+                list.add(obj);
+            }
+            System.out.println(x);
+            return list;
+
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    
+    
+    
     @RequestMapping(value = "/Individus",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public   List<JSONObject> getIndividus() {
         List<JSONObject> list=new ArrayList();

@@ -2858,6 +2858,18 @@
     
 
 
+    <!-- http://www.semanticweb.org/construction.owl#V003 -->
+
+    <owl:NamedIndividual rdf:about="http://www.semanticweb.org/construction.owl#V003">
+        <rdf:type rdf:resource="http://www.semanticweb.org/construction.owl#Vendors"/>
+        <isSupplierOf rdf:resource="http://www.semanticweb.org/construction.owl#Ho001"/>
+        <isSupplierOf rdf:resource="http://www.semanticweb.org/construction.owl#W002"/>
+        <address rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kiribathgoda colombo</address>
+        <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kamalanath Holdings</identifier>
+    </owl:NamedIndividual>
+    
+
+
     <!-- http://www.semanticweb.org/construction.owl#Veyangoda -->
 
     <owl:NamedIndividual rdf:about="http://www.semanticweb.org/construction.owl#Veyangoda">
