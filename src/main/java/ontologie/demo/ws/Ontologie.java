@@ -73,7 +73,39 @@ public class Ontologie {
         return null;
     }
 
-    @RequestMapping(value = "/searchByLocation",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/getLocations",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public   List<JSONObject> getLocations() {
+        List<JSONObject> list=new ArrayList();
+        String fileName = "construction.owl";
+        try {
+            
+            File file = new File(fileName);
+            FileReader reader = new FileReader(file);
+            OntModel model = ModelFactory
+                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
+            model.read(reader,null);
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?object WHERE { ?object rdfs:subClassOf+/rdfs:subClassOf my:Location}";
+            Query query = QueryFactory.create(sprql);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet resultSet = qe.execSelect();
+           int x=0;
+            while (resultSet.hasNext()) {
+                x++;
+                JSONObject obj = new JSONObject();
+                QuerySolution solution = resultSet.nextSolution();
+                obj.put("location",solution.get("object").toString());
+                list.add(obj);
+            }
+            System.out.println(x);
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    @RequestMapping(value = "/getLocationBasedServices",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public   List<JSONObject> searchByLocation(@RequestParam("location") String location) {
         List<JSONObject> list=new ArrayList();
         String fileName = "construction.owl";
