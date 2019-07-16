@@ -105,6 +105,38 @@ public class Ontologie {
         return null;
     }
 
+    @RequestMapping(value = "/getCostLevels",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
+    public   List<JSONObject> getCostLevels() {
+        List<JSONObject> list=new ArrayList();
+        String fileName = "construction.owl";
+        try {
+            
+            File file = new File(fileName);
+            FileReader reader = new FileReader(file);
+            OntModel model = ModelFactory
+                    .createOntologyModel(OntModelSpec.OWL_DL_MEM);
+            model.read(reader,null);
+            
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT ?ind  WHERE { 	?ind rdf:type ?X . ?X rdfs:subClassOf my:CostRange .}";
+            Query query = QueryFactory.create(sprql);
+            QueryExecution qe = QueryExecutionFactory.create(query, model);
+            ResultSet resultSet = qe.execSelect();
+           int x=0;
+            while (resultSet.hasNext()) {
+                x++;
+                JSONObject obj = new JSONObject();
+                QuerySolution solution = resultSet.nextSolution();
+                obj.put("levels",solution.get("ind").toString());
+                list.add(obj);
+            }
+            System.out.println(x);
+            return list;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/getLocationBasedServices",method = RequestMethod.GET,produces = MediaType.APPLICATION_JSON_VALUE)
     public   List<JSONObject> searchByLocation(@RequestParam("location") String location) {
         List<JSONObject> list=new ArrayList();
@@ -202,7 +234,7 @@ public class Ontologie {
                     .createOntologyModel(OntModelSpec.OWL_DL_MEM);
             model.read(reader,null);
             
-            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?subject ?object ?email ?address ?type ?city ?registrationNumber ?started ?phone	WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?subject), \""+name+"\").  optional {?subject my:email  ?email.} optional {?subject   my:address ?address.} optional {?subject my:type ?type.} optional {?subject my:city ?city.} optional {?subject my:phone ?phone.} optional {?subject my:registrationNumber ?registrationNumber.} optional {?subject my:started ?started.}}";
+            String sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?subject ?object ?email ?address ?type ?city ?registrationNumber ?started ?phone ?image	WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?subject), \""+name+"\").  optional {?subject my:email  ?email.} optional {?subject   my:address ?address.} optional {?subject my:type ?type.} optional {?subject my:city ?city.} optional {?subject my:phone ?phone.} optional {?subject my:registrationNumber ?registrationNumber.} optional {?subject my:started ?started.} optional {?subject my:imageURL ?image.}}";
             Query query = QueryFactory.create(sprql);
             QueryExecution qe = QueryExecutionFactory.create(query, model);
             ResultSet resultSet = qe.execSelect();
@@ -211,8 +243,8 @@ public class Ontologie {
                 x++;
                 JSONObject obj = new JSONObject();
                 QuerySolution solution = resultSet.nextSolution();
-                RDFNode[] res = {solution.get("email"),solution.get("address"),solution.get("type"),solution.get("city"),solution.get("registrationNumber"),solution.get("started"),solution.get("phone"),solution.get("subject"),solution.get("object")};
-                String[] lables = {"email","address","type","city","registrationNumber","started","phone","subject","object"};
+                RDFNode[] res = {solution.get("email"),solution.get("address"),solution.get("type"),solution.get("city"),solution.get("registrationNumber"),solution.get("started"),solution.get("phone"),solution.get("subject"),solution.get("object"),solution.get("image")};
+                String[] lables = {"email","address","type","city","registrationNumber","started","phone","subject","object","image"};
                 for(int i=0;i<lables.length;i++){
                     if(res[i]!=null){
                         obj.put(lables[i],res[i].toString());

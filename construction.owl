@@ -161,6 +161,12 @@
     
 
 
+    <!-- http://www.semanticweb.org/construction.owl#imageURL -->
+
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/construction.owl#imageURL"/>
+    
+
+
     <!-- http://www.semanticweb.org/construction.owl#phone -->
 
     <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/construction.owl#phone">
@@ -2525,6 +2531,7 @@
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Colombo 15</city>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">unieff@sltnet.lk</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Unieff (Pvt) Ltd</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://content3.jdmagicbox.com/comp/ernakulam/w4/0484px484.x484.130223184612.y5w4/catalogue/horizon-group-hi-tech-fabricating-company-pvt-ltd-kaloor-ernakulam-fabricators-3jczksj.jpg</imageURL>
         <phone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0114884860</phone>
         <registrationNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">NB0055</registrationNumber>
     </owl:NamedIndividual>
@@ -2665,6 +2672,7 @@
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kiribathgoda</city>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">anuja.fdo@gmail.com</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Civicon Engineering Services (Pvt) Ltd</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://content3.jdmagicbox.com/comp/hyderabad/q4/040pxx40.xx40.120208143538.s3q4/catalogue/united-consultancy-service-india-pvt-ltd-somajiguda-hyderabad-company-registration-consultants-19ul573.jpg</imageURL>
         <phone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0112909786</phone>
         <registrationNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">JH00578</registrationNumber>
         <started rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2017-06-25T00:00:00Z</started>
@@ -2684,6 +2692,7 @@
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Pannipitiya</city>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gayanmeegalla@gmail.com</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">SK Holdings</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://content3.jdmagicbox.com/comp/ernakulam/w4/0484px484.x484.130223184612.y5w4/catalogue/horizon-group-hi-tech-fabricating-company-pvt-ltd-kaloor-ernakulam-fabricators-zu0pi4.jpg</imageURL>
         <started rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-12-25T00:00:00Z</started>
     </owl:NamedIndividual>
     
@@ -2723,6 +2732,7 @@
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Battaramulla</city>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">projects@amberengineeringsl.com</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Amber Engineering Consortium (Pvt) Ltd</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://www.amskconstruction.com/images/product_services/pic_2.jpg</imageURL>
         <phone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0114387766</phone>
         <registrationNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">PV83907</registrationNumber>
         <started rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2016-06-25T00:00:00Z</started>
@@ -2742,6 +2752,7 @@
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Nugegoda</city>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kalharibuilders@sltnet.lk</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kalhari Builders (Pvt) Ltd</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://content1.jdmagicbox.com/comp/thiruvananthapuram/g5/0471px471.x471.100715135747.b2g5/catalogue/arjun-amaravathi-chits-pvt-ltd-pazhavangadi-thiruvananthapuram-financial-advisers-3m3a6m5.jpg</imageURL>
         <phone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">0112852365</phone>
         <registrationNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">BG512</registrationNumber>
         <type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Private</type>
@@ -2839,6 +2850,7 @@
         <address rdf:datatype="http://www.w3.org/2001/XMLSchema#string">No. 547, Old Gampola Rd. Peradeniya Sri Lanka.</address>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">solidlanka@yahoo.com</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Solid Lanka Engineering (Pvt) Ltd</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://3.imimg.com/data3/MV/OP/MY-10355294/garuda-skyfield-500x500.jpg</imageURL>
         <phone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">773599530</phone>
         <started rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-06-01T00:00:00Z</started>
         <type rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Private</type>
@@ -2854,6 +2866,7 @@
         <isSupplierOf rdf:resource="http://www.semanticweb.org/construction.owl#W002"/>
         <address rdf:datatype="http://www.w3.org/2001/XMLSchema#string">colombo</address>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Ariasinghe constructions</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRGlCPzmXdB4eX1HXBC5zhyS3i7m9WlzMKD0yOtEPVLNQzfIyC5SA</imageURL>
     </owl:NamedIndividual>
     
 
@@ -2911,6 +2924,7 @@
         <address rdf:datatype="http://www.w3.org/2001/XMLSchema#string">16/5,Pipe Road,Thalangama North,Battaramulla.</address>
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Battaramulla</city>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Green Home International (Pvt) Ltd</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://4.bp.blogspot.com/_s2jU7girbyM/SBlxmaef-vI/AAAAAAAAAc0/MVoGBzv4X-0/s400/Motorolla+Rock+View+Heights.jpg</imageURL>
         <phone rdf:datatype="http://www.w3.org/2001/XMLSchema#string">777226565</phone>
         <started rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-12-01T00:00:00Z</started>
     </owl:NamedIndividual>
@@ -2927,6 +2941,7 @@
         <city rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Kottawa</city>
         <email rdf:datatype="http://www.w3.org/2001/XMLSchema#string">gihan@yahoo.com</email>
         <identifier rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Gihan Holding</identifier>
+        <imageURL rdf:datatype="http://www.w3.org/2001/XMLSchema#string">https://www.arrkeurope.com/fileadmin/_processed_/c/f/csm_IMG-20181107-WA0022_d94400cf4b.jpg</imageURL>
         <registrationNumber rdf:datatype="http://www.w3.org/2001/XMLSchema#string">GGh0089</registrationNumber>
         <started rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2019-01-01T00:00:00Z</started>
     </owl:NamedIndividual>
