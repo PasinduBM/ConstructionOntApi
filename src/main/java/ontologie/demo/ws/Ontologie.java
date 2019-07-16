@@ -212,6 +212,8 @@ public class Ontologie {
                 RDFNode a = solution.get("Z");
                 if(a!=null){
                     obj.put("image",a.toString());
+                }else{
+                    obj.put("image","");
                 }
                 list.add(obj);
             }
