@@ -189,13 +189,13 @@ public class Ontologie {
             String sprql = "";
             System.out.print(location+":"+service+":"+cost);
             if(location.equals("")&&cost.equals("")){
-                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y. }";
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X ?Z WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. optional {?X my:imageURL ?Z} ?X my:identifier ?Y. }";
             }else if(location.equals("")){
-                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?subject my:hasCost ?V. FILTER REGEX(str(?V),\""+cost+"\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.}";
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X ?Z WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?subject my:hasCost ?V. FILTER REGEX(str(?V),\""+cost+"\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.}";
             }else if(cost.equals("")){
-                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\"). ?X my:identifier ?Y. }";
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X ?Z WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\").optional { ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.} optional {?X my:imageURL ?Z} } optional {?X my:imageURL ?Z} ?X my:identifier ?Y. }";
             }else {
-                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?subject my:hasCost ?V.	FILTER REGEX(str(?V),\""+cost+"\").	?X my:isSupplierOf ?subject. ?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\"). ?X my:identifier ?Y. }";
+                sprql = "PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X ?Z WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?subject my:hasCost ?V.	FILTER REGEX(str(?V),\""+cost+"\").	?X my:isSupplierOf ?subject. ?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\"). optional { ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.} optional {?X my:imageURL ?Z} } ?X my:identifier ?Y. }";
             }
             System.out.print(sprql);
             Query query = QueryFactory.create(sprql);
@@ -209,7 +209,10 @@ public class Ontologie {
                 
                 obj.put("name",solution.get("Y").toString());
                 obj.put("id",solution.get("X").toString());
-                
+                RDFNode a = solution.get("Z");
+                if(a!=null){
+                    obj.put("image",a.toString());
+                }
                 list.add(obj);
             }
             System.out.println(x);
