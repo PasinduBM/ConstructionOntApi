@@ -1,31 +1,111 @@
 ////////////////get all locations///////////////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?object WHERE { ?object rdfs:subClassOf+/rdfs:subClassOf my:Location}
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?object 
+WHERE { 
+	?object rdfs:subClassOf+/rdfs:subClassOf my:Location
+	}
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////get all cost levels///////////////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?object WHERE {?ind rdf:type ?X . ?X rdfs:subClassOf my:CostRange .}
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?object 
+WHERE {
+	?ind rdf:type ?X . ?X rdfs:subClassOf my:CostRange.
+	}
 ////////////////////////////////////////////////////////////////////////////////
 
 ////////////////get service based locations///////////////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?ide ?object ?subject WHERE { ?subject my:hasLocation ?object. FILTER REGEX (str(?object), \""+location+"\" , \"i\"). ?subject my:identifier ?ide. }
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?ide ?object ?subject 
+WHERE { 
+	?subject my:hasLocation ?object. 
+	FILTER REGEX (str(?object), \""+location+"\" , \"i\"). 
+	?subject my:identifier ?ide. 
+	}
 //////////////////////////////////////////////////////////////////////////////
 
 ////////////////get profile details ////////////////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?subject ?object ?email ?address ?type ?city ?registrationNumber ?started ?phone	WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?subject), \""+name+"\").  optional {?subject my:email  ?email.} optional {?subject   my:address ?address.} optional {?subject my:type ?type.} optional {?subject my:city ?city.} optional {?subject my:phone ?phone.} optional {?subject my:registrationNumber ?registrationNumber.} optional {?subject my:started ?started.}}
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#>  
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?subject ?object ?email ?address ?type ?city ?registrationNumber ?started ?phone	
+WHERE { 
+	?subject my:identifier ?object. 
+	FILTER REGEX (str(?subject), \""+name+"\").  
+	optional {?subject my:email  ?email.} 
+	optional {?subject   my:address ?address.} 
+	optional {?subject my:type ?type.} 
+	optional {?subject my:city ?city.} 
+	optional {?subject my:phone ?phone.} 
+	optional {?subject my:registrationNumber ?registrationNumber.} 
+	optional {?subject my:started ?started.}
+	}
 ////////////////////////////////////////////////////////////////////////////////////
 
 //////////////////serch by service/////////////////////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), "Hotel", "i"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y. }
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?Y ?X 
+WHERE { 
+	?subject my:identifier ?object. 
+	FILTER REGEX (str(?object), "Hotel", "i"). 
+	?X my:isSupplierOf ?subject. 
+	?X my:identifier ?Y. 
+	}
 ///////////////////////////////////////////////////////////////////////////////////
 
 //////////////////filter by cost & service//////////////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), "Hotel", "i"). ?X my:isSupplierOf ?subject. ?X my:identifier ?Y.?X my:address ?W. FILTER REGEX(str(?W),"colombo"). ?X my:identifier ?Y. }
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?Y ?X 
+WHERE { 
+	?subject my:identifier ?object. 
+	FILTER REGEX (str(?object), "Hotel", "i"). 
+	?X my:isSupplierOf ?subject. 
+	?X my:identifier ?Y.
+	?X my:address ?W. 
+	FILTER REGEX(str(?W),"colombo"). 
+	?X my:identifier ?Y. 
+	}
 ////////////////////////////////////////////////////////////////////////////////////
 
 /////////////////flter by cost & service & location////////////////////////////////
-PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> PREFIX owl: <http://www.w3.org/2002/07/owl#> PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> PREFIX my: <http://www.semanticweb.org/construction.owl#> SELECT DISTINCT  ?Y ?X WHERE { ?subject my:identifier ?object. FILTER REGEX (str(?object), \""+service+"\", \"i\"). ?subject my:hasCost ?V.	FILTER REGEX(str(?V),\""+cost+"\").	?X my:isSupplierOf ?subject. ?X my:address ?W. FILTER REGEX(str(?W),\""+location+"\"). ?X my:identifier ?Y. }
-
-
+PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> 
+PREFIX owl: <http://www.w3.org/2002/07/owl#> 
+PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#> 
+PREFIX xsd: <http://www.w3.org/2001/XMLSchema#> 
+PREFIX my: <http://www.semanticweb.org/construction.owl#> 
+SELECT DISTINCT  ?Y ?X 
+WHERE { 
+	?subject my:identifier ?object. 
+	FILTER REGEX (str(?object), \""+service+"\", \"i\"). 
+	?subject my:hasCost ?V.	
+	FILTER REGEX(str(?V),\""+cost+"\").	
+	?X my:isSupplierOf ?subject. 
+	?X my:address ?W. 
+	FILTER REGEX(str(?W),\""+location+"\"). 
+	?X my:identifier ?Y. }
+////////////////////////////////////////////////////////////////////////////////////
 
 
 ///////////find location base services///////////////////////////
@@ -173,10 +253,9 @@ optional { ?subject my:hasLocation ?object.
 	FILTER REGEX (str(?object), "colombo" , "i").}
  optional {?X my:imageURL ?Z} 
 }
-////for search "house"
-///////////////////////////////////////////////
+////////////////////////////////////////////////////
 
-
+////for search "house"///////////////////////////////////////////////
 
 PREFIX rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#>
 PREFIX owl: <http://www.w3.org/2002/07/owl#>
@@ -200,3 +279,4 @@ optional
 	{?X my:imageURL ?Z}
 	
 }
+////////////////////////////////////////////////////
