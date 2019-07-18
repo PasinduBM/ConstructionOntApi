@@ -26,6 +26,22 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#accessTender">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Tenders"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/construction.owl#canReview -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#canReview">
+        <owl:inverseOf rdf:resource="http://www.semanticweb.org/construction.owl#getReview"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#FunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
     </owl:ObjectProperty>
     
 
@@ -34,6 +50,21 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#getQuotation">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Quotation"/>
+    </owl:ObjectProperty>
+    
+
+
+    <!-- http://www.semanticweb.org/construction.owl#getReview -->
+
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#getReview">
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#InverseFunctionalProperty"/>
+        <rdf:type rdf:resource="http://www.w3.org/2002/07/owl#IrreflexiveProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
     </owl:ObjectProperty>
     
 
@@ -43,6 +74,8 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasBuyer">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/construction.owl#isBuyerOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
     </owl:ObjectProperty>
     
 
@@ -51,6 +84,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasCost">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#CostRange"/>
     </owl:ObjectProperty>
     
 
@@ -59,13 +94,19 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasDistance">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#DistanceRange"/>
     </owl:ObjectProperty>
     
 
 
     <!-- http://www.semanticweb.org/construction.owl#hasLocation -->
 
-    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasLocation"/>
+    <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasLocation">
+        <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Location"/>
+    </owl:ObjectProperty>
     
 
 
@@ -74,6 +115,8 @@
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasSupplier">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
         <owl:inverseOf rdf:resource="http://www.semanticweb.org/construction.owl#isSupplierOf"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
     </owl:ObjectProperty>
     
 
@@ -82,6 +125,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#hasTime">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#TimeRange"/>
     </owl:ObjectProperty>
     
 
@@ -90,6 +135,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#isBuyerOf">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
     </owl:ObjectProperty>
     
 
@@ -98,6 +145,8 @@
 
     <owl:ObjectProperty rdf:about="http://www.semanticweb.org/construction.owl#isSupplierOf">
         <rdfs:subPropertyOf rdf:resource="http://www.w3.org/2002/07/owl#topObjectProperty"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+        <rdfs:range rdf:resource="http://www.semanticweb.org/construction.owl#ConstructionMarket"/>
     </owl:ObjectProperty>
     
 
@@ -137,7 +186,10 @@
 
     <!-- http://www.semanticweb.org/construction.owl#discription -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/construction.owl#discription"/>
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/construction.owl#discription">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+    </owl:DatatypeProperty>
     
 
 
@@ -169,7 +221,11 @@
 
     <!-- http://www.semanticweb.org/construction.owl#imageURL -->
 
-    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/construction.owl#imageURL"/>
+    <owl:DatatypeProperty rdf:about="http://www.semanticweb.org/construction.owl#imageURL">
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+        <rdfs:domain rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+        <rdfs:range rdf:resource="http://www.w3.org/2001/XMLSchema#string"/>
+    </owl:DatatypeProperty>
     
 
 
@@ -430,6 +486,18 @@
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/construction.owl#canReview"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/construction.owl#getReview"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/construction.owl#Supplier"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
@@ -2200,6 +2268,18 @@
                 </owl:intersectionOf>
             </owl:Class>
         </owl:equivalentClass>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/construction.owl#canReview"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
+        <rdfs:subClassOf>
+            <owl:Restriction>
+                <owl:onProperty rdf:resource="http://www.semanticweb.org/construction.owl#getReview"/>
+                <owl:someValuesFrom rdf:resource="http://www.semanticweb.org/construction.owl#Buyer"/>
+            </owl:Restriction>
+        </rdfs:subClassOf>
     </owl:Class>
     
 
