@@ -40,6 +40,6 @@ run the command "java -jar -Dapple.awt.UIElement="false" target/demo-0.0.1-SNAPS
 ##
 
 
-**Frontend for this back is created by [mithila1993](https://github.com/mithila1993) and the repository is [here](https://github.com/mithila1993/ConstructionOntFrontend).**
+**Frontend for this backend is created by [mithila1993](https://github.com/mithila1993) and the repository is [here](https://github.com/mithila1993/ConstructionOntFrontend).**
 
 **Ontology is created by [nishanc](https://github.com/nishanc) and the repository is [here](https://github.com/nishanc/construction_industry_ontology).**
